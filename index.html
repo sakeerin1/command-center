@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Reen AI Command Center - Executive Assistant</title>
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0f172a">
+    <!-- Google Fonts: Inter & Sarabun for professional Thai/English typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+    <div class="app-container">
+        <!-- Sidebar Navigation (Desktop) / Bottom Navigation (Mobile) -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-logo">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                        <polyline points="2 17 12 22 22 17"></polyline>
+                        <polyline points="2 12 12 17 22 12"></polyline>
+                    </svg>
+                </div>
+                <div class="brand-name">
+                    <h1>REEN AI</h1>
+                    <span>COMMAND CENTER</span>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="9" rx="1"></rect>
+                        <rect x="14" y="3" width="7" height="5" rx="1"></rect>
+                        <rect x="14" y="12" width="7" height="9" rx="1"></rect>
+                        <rect x="3" y="16" width="7" height="5" rx="1"></rect>
+                    </svg>
+                    <span>หน้าหลัก (Home)</span>
+                </button>
+
+                <button class="nav-item" data-tab="today">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 11l3 3L22 4"></path>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
+                    <span>งานวันนี้ (Today)</span>
+                </button>
+
+                <button class="nav-item" data-tab="projects">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <span>โปรเจกต์ (Projects)</span>
+                </button>
+
+                <button class="nav-item" data-tab="assistant">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
+                    <span>ผู้ช่วย AI</span>
+                </button>
+
+                <button class="nav-item" data-tab="revenue">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                    <span>รายได้ & รายจ่าย</span>
+                </button>
+
+                <button class="nav-item" data-tab="ideas">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18h6"></path>
+                        <path d="M10 22h4"></path>
+                        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+                    </svg>
+                    <span>ไอเดียสะสม</span>
+                </button>
+
+                <button class="nav-item" data-tab="settings">
+                    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <span>ตั้งค่า</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <p>Reen AI Assistant v4.0</p>
+                <span class="status-indicator online">Online & Ready</span>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-title">
+                    <h2 id="active-tab-title">ศูนย์บัญชาการ (Command Center)</h2>
+                    <p id="header-subtitle" class="text-muted">ผู้ช่วยส่วนตัวข้างกาย - สั่งงานหรือเล่าเรื่องง่ายๆ แล้วให้ AI จัดการให้อัตโนมัติ</p>
+                </div>
+                <div class="header-widgets">
+                    <div class="system-time-container">
+                        <span id="live-time">00:00:00</span>
+                        <span id="live-date">วันเสาร์ที่ 22 กรกฎาคม 2026</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SINGLE UNIFIED COMMAND & STORY INPUT BAR (ศูนย์กลางการสั่งงานและคำบอกเล่า) -->
+            <div class="quick-command-bar highlight-border-gold">
+                <div class="input-with-voice">
+                    <input type="text" id="global-command-input" placeholder="💬 พูดหรือพิมพ์เล่าอะไรก็ได้ เช่น 'สั่งงานมิวทำใบลาส่งวันที่ 30' หรือ 'วันนี้จ่ายค่าโดเมน sitekira 5000'...">
+                    <button id="global-voice-btn" class="mic-trigger-btn btn-voice-gradient" title="แตะเพื่อพูดสั่งงานหรือบอกเล่า">
+                        🎙️ พูดสั่งงาน
+                    </button>
+                    <button id="global-submit-btn" class="btn btn-primary">ส่งคำสั่ง</button>
+                </div>
+                <div id="command-extracted-badge" class="mt-2 text-xs text-gold flex-row align-center gap-2 hidden">
+                    <span>✨ AI จับใจความให้อัตโนมัติ:</span>
+                    <strong id="command-extracted-text">-</strong>
+                </div>
+            </div>
+
+            <!-- Content Screens -->
+            <div class="content-container">
+                
+                <!-- 1. DASHBOARD HOME SCREEN - 4 PILLARS (📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ) -->
+                <section id="dashboard-tab" class="tab-panel active">
+                    
+                    <!-- Top Stat Overview Bar -->
+                    <div class="dashboard-grid mb-6">
+                        <div class="dashboard-card welcome-card col-span-3">
+                            <div class="welcome-content">
+                                <h3 id="greeting-text">สวัสดีครับพี่รีน 👋</h3>
+                                <p id="greeting-subtitle">ระบบ AI จับใจความและคัดแยกข้อมูลงาน นัดหมาย และรายจ่ายให้อัตโนมัติเรียบร้อยแล้วครับ</p>
+                                
+                                <div class="quick-stats-bar">
+                                    <div class="stat-pill highlight-urgent" data-tab-trigger="today">
+                                        <span class="stat-val" id="stat-urgent-count">0</span>
+                                        <span class="stat-lbl">📢 แจ้งด่วน</span>
+                                    </div>
+                                    <div class="stat-pill" data-tab-trigger="today">
+                                        <span class="stat-val" id="stat-today-count">0</span>
+                                        <span class="stat-lbl">🤝 งานต้องช่วย</span>
+                                    </div>
+                                    <div class="stat-pill highlight-revenue" data-tab-trigger="revenue">
+                                        <span class="stat-val" id="stat-expense-count">฿0</span>
+                                        <span class="stat-lbl">💳 รายจ่ายรวม</span>
+                                    </div>
+                                    <div class="stat-pill" data-tab-trigger="ideas">
+                                        <span class="stat-val" id="stat-ideas-count">0</span>
+                                        <span class="stat-lbl">🧠 ความจำ/ไอเดีย</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 PILLARS COMMAND BOARD (📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ) -->
+                    <div class="dashboard-grid">
+
+                        <!-- Pillar 1: 📢 แจ้ง (Alerts & Daily Brief) -->
+                        <div class="dashboard-card glass-panel flex-column highlight-border-gold">
+                            <div class="card-header flex-row justify-between align-center">
+                                <h4>📢 1. ศูนย์แจ้ง (Alerts & Notice)</h4>
+                                <span class="badge badge-gold">แจ้งเตือน</span>
+                            </div>
+                            <div class="card-body flex-column gap-3 py-2">
+                                <button id="btn-listen-daily-brief" class="btn btn-audio-action width-full">
+                                    <span class="icon">🔊</span>
+                                    <div class="text-left">
+                                        <strong>ฟังสรุปยามเช้า (Daily Brief)</strong>
+                                        <p class="text-xs opacity-75">สรุปสถานะประจำวัน งานด่วน นัดหมาย</p>
+                                    </div>
+                                </button>
+
+                                <button id="btn-listen-evening-summary" class="btn btn-audio-action width-full" style="border-color: var(--accent-purple); color: #c084fc;">
+                                    <span class="icon">🌇</span>
+                                    <div class="text-left">
+                                        <strong>ฟังสรุปยามเย็น (Evening Summary)</strong>
+                                        <p class="text-xs opacity-75">ทบทวนงานเสร็จและเตรียมแผนพรุ่งนี้</p>
+                                    </div>
+                                </button>
+
+                                <div class="audio-speed-control flex-row justify-between align-center px-1">
+                                    <span class="text-xs text-muted">ความเร็วเสียง:</span>
+                                    <div class="btn-group-sm">
+                                        <button class="btn-speed-select active" data-speed="1.0">1.0x</button>
+                                        <button class="btn-speed-select" data-speed="1.25">1.25x</button>
+                                        <button class="btn-speed-select" data-speed="1.5">1.5x</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 2: 🤝 ช่วย (AI Recommendations & Tasks) -->
+                        <div class="dashboard-card glass-panel flex-column highlight-border-cyan">
+                            <div class="card-header flex-row justify-between align-center">
+                                <h4>🤝 2. ศูนย์ช่วย (AI Assist & Action)</h4>
+                                <span class="badge badge-cyan">ผู้ช่วย</span>
+                            </div>
+                            <div class="card-body flex-column gap-3">
+                                <div class="ai-advice-box p-3 border-radius-md bg-glass">
+                                    <strong class="text-xs text-cyan block mb-1">💡 คำแนะนำ AI วันนี้:</strong>
+                                    <p id="ai-recommendation-text" class="text-xs">กำลังวิเคราะห์ลำดับความสำคัญของงาน...</p>
+                                </div>
+                                <button id="btn-open-voice-modal" class="btn btn-audio-action width-full btn-voice-gradient">
+                                    <span class="icon">🎙️</span>
+                                    <div class="text-left">
+                                        <strong>คุยสั่งงานโต้ตอบเสียง (Voice AI)</strong>
+                                        <p class="text-xs opacity-75">เปิดโหมดสนทนาเสียงแบบเต็มหน้าจอ</p>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 3: ⏰ เตือน (Reminders & Subordinate Follow-ups) -->
+                        <div class="dashboard-card glass-panel flex-column highlight-border-rose">
+                            <div class="card-header flex-row justify-between align-center">
+                                <h4>⏰ 3. ศูนย์เตือน (Reminders & Follow-up)</h4>
+                                <span class="badge badge-rose">ตามงาน</span>
+                            </div>
+                            <div class="card-body" id="dash-priority-tasks-list">
+                                <p class="text-muted text-center py-4">กำลังโหลดข้อมูลงานสั่งการ...</p>
+                            </div>
+                        </div>
+
+                        <!-- Pillar 4: 🧠 จำ (AI Memory & Ideas Storage) -->
+                        <div class="dashboard-card glass-panel flex-column col-span-3">
+                            <div class="card-header flex-row justify-between align-center">
+                                <h4>🧠 4. ศูนย์จำ (AI Context Memory & Brain Dump)</h4>
+                                <button class="btn btn-sm btn-outline" data-tab-trigger="ideas">+ เพิ่มไอเดียใหม่</button>
+                            </div>
+                            <div class="card-body grid-3-cols gap-4" id="dash-memory-ideas-grid">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- 2. TODAY DASHBOARD SCREEN -->
+                <section id="today-tab" class="tab-panel">
+                    <div class="today-container">
+                        <div class="filter-bar flex-row justify-between align-center mb-4 flex-wrap gap-2">
+                            <div class="tabs-filter-group">
+                                <button class="filter-btn active" data-filter="all">งานทั้งหมด</button>
+                                <button class="filter-btn" data-filter="urgent">ด่วนที่สุด 🚨</button>
+                                <button class="filter-btn" data-filter="revenue">งานสร้างรายได้ 💰</button>
+                                <button class="filter-btn" data-filter="delegated">มอบหมายลูกน้อง 👥</button>
+                                <button class="filter-btn" data-filter="expense">รายจ่าย 💳</button>
+                            </div>
+
+                            <div class="view-mode-selector">
+                                <button id="view-list-btn" class="btn btn-sm btn-outline active">☰ รายการ</button>
+                                <button id="view-kanban-btn" class="btn btn-sm btn-outline">📋 คัมบังบอร์ด</button>
+                            </div>
+                        </div>
+
+                        <!-- Today Quick Add Form -->
+                        <div class="glass-panel p-4 mb-6">
+                            <form id="new-task-form" class="grid-layout gap-3">
+                                <div class="col-span-full flex-row gap-2">
+                                    <input type="text" id="task-title-input" class="form-control flex-1" placeholder="ระบุชื่องาน สั่งงานลูกน้อง หรือรายจ่าย..." required>
+                                    <button type="submit" class="btn btn-primary">+ บันทึกงาน</button>
+                                </div>
+                                <div class="flex-row gap-3 flex-wrap">
+                                    <select id="task-project-select" class="form-control-sm">
+                                        <option value="Sino House Phuket">Sino House Phuket</option>
+                                        <option value="PMS Kiralux System">PMS Kiralux System</option>
+                                        <option value="sitekira">sitekira</option>
+                                        <option value="Kiralux Property">Kiralux Property</option>
+                                        <option value="General">งานทั่วไป (General)</option>
+                                    </select>
+                                    <select id="task-priority-select" class="form-control-sm">
+                                        <option value="medium">ความสำคัญ: ปกติ</option>
+                                        <option value="high">ความสำคัญ: สูง</option>
+                                        <option value="urgent">ความสำคัญ: ด่วนที่สุด</option>
+                                    </select>
+                                    <input type="text" id="task-assignee-input" class="form-control-sm" placeholder="ผู้รับผิดชอบ (เช่น มิว, ช่าง)">
+                                    <input type="number" id="task-expense-input" class="form-control-sm" placeholder="จำนวนเงิน/รายจ่าย (บาท)">
+                                    <input type="date" id="task-date-input" class="form-control-sm">
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- List View Container -->
+                        <div id="today-list-view" class="tasks-list-container">
+                            <div id="today-tasks-container" class="flex-column gap-3">
+                                <!-- Dynamically rendered -->
+                            </div>
+                        </div>
+
+                        <!-- Kanban Board View Container -->
+                        <div id="today-kanban-view" class="kanban-board-container hidden">
+                            <div class="kanban-grid">
+                                <div class="kanban-column" data-status="todo">
+                                    <div class="column-header">
+                                        <h5>📝 สิ่งที่ต้องทำ (Todo)</h5>
+                                        <span class="column-count" id="count-todo">0</span>
+                                    </div>
+                                    <div class="kanban-cards" id="kanban-todo"></div>
+                                </div>
+
+                                <div class="kanban-column" data-status="in_progress">
+                                    <div class="column-header">
+                                        <h5>⚡ กำลังดำเนินการ (In Progress)</h5>
+                                        <span class="column-count" id="count-in-progress">0</span>
+                                    </div>
+                                    <div class="kanban-cards" id="kanban-in-progress"></div>
+                                </div>
+
+                                <div class="kanban-column" data-status="waiting">
+                                    <div class="column-header">
+                                        <h5>⏳ รอมอบหมาย/ติดตาม (Waiting)</h5>
+                                        <span class="column-count" id="count-waiting">0</span>
+                                    </div>
+                                    <div class="kanban-cards" id="kanban-waiting"></div>
+                                </div>
+
+                                <div class="kanban-column" data-status="completed">
+                                    <div class="column-header">
+                                        <h5>เสร็จแล้ว (Completed)</h5>
+                                        <span class="column-count" id="count-completed">0</span>
+                                    </div>
+                                    <div class="kanban-cards" id="kanban-completed"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- 3. PROJECTS CENTER SCREEN -->
+                <section id="projects-tab" class="tab-panel">
+                    <div class="projects-container">
+                        <div class="flex-row justify-between align-center mb-6">
+                            <h3>🏢 การจัดการโปรเจกต์ทั้งหมด (Project Management)</h3>
+                            <button id="btn-add-project" class="btn btn-primary">+ สร้างโปรเจกต์ใหม่</button>
+                        </div>
+
+                        <div class="grid-3-cols gap-6 mb-6" id="projects-list-grid">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. AI ASSISTANT SCREEN -->
+                <section id="assistant-tab" class="tab-panel">
+                    <div class="assistant-chat-container glass-panel">
+                        <div class="chat-header p-4 border-bottom border-glass flex-row justify-between align-center">
+                            <div class="flex-row align-center gap-3">
+                                <span class="assistant-avatar">🤖</span>
+                                <div>
+                                    <h4>Reen AI Executive Assistant</h4>
+                                    <p class="text-xs text-muted">พร้อมตอบคำถาม บันทึกงาน และวิเคราะห์โปรเจกต์</p>
+                                </div>
+                            </div>
+                            <button id="btn-read-chat-summary" class="btn btn-sm btn-outline">🔊 อ่านคำตอบล่าสุด</button>
+                        </div>
+
+                        <div class="chat-body p-4" id="chat-messages-list">
+                            <div class="chat-message assistant">
+                                <div class="msg-bubble">
+                                    สวัสดีครับพี่รีน ผมคือ Reen AI ผู้ช่วยส่วนตัวของคุณ พี่รีนสามารถพิมพ์คำสั่ง หรือพูดสั่งงานเรื่องงาน มอบหมายลูกน้อง หรือบันทึกรายจ่ายได้ตลอดเวลาเลยครับ!
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-footer p-4 border-top border-glass">
+                            <form id="chat-input-form" class="flex-row gap-2">
+                                <input type="text" id="chat-input-text" class="form-control flex-1" placeholder="พิมพ์ข้อความคุยกับผู้ช่วย AI..." required>
+                                <button type="button" id="chat-mic-btn" class="btn btn-outline" title="พูดแทนการพิมพ์">🎙️</button>
+                                <button type="submit" class="btn btn-primary">ส่ง</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. REVENUE & EXPENSE TRACKER SCREEN -->
+                <section id="revenue-tab" class="tab-panel">
+                    <div class="revenue-container">
+                        <div class="flex-row justify-between align-center mb-6">
+                            <h3>💳 ระบบติดตามรายรับ รายจ่าย และดีลลูกค้า</h3>
+                            <button id="btn-add-expense-modal" class="btn btn-primary">+ บันทึกรายจ่าย</button>
+                        </div>
+
+                        <div class="grid-2-cols gap-6 mb-6">
+                            <div class="glass-panel p-6">
+                                <h4>📊 สรุปรายจ่ายตามโปรเจกต์ (Project Expenses)</h4>
+                                <div id="project-expenses-breakdown" class="mt-4 flex-column gap-3">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+
+                            <div class="glass-panel p-6">
+                                <h4>💼 ดีลและโอกาสสร้างรายได้ (CRM Pipeline)</h4>
+                                <div id="crm-deals-list" class="mt-4 flex-column gap-3">
+                                    <div class="deal-item p-3 border-radius-md bg-glass flex-row justify-between align-center">
+                                        <div>
+                                            <strong>ลูกค้าโรงแรม PMS Phuket</strong>
+                                            <p class="text-xs text-muted">สถานะ: ส่ง Proposal แล้ว (เกิน 3 วัน)</p>
+                                        </div>
+                                        <span class="badge badge-gold">฿45,000</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. IDEAS SCREEN -->
+                <section id="ideas-tab" class="tab-panel">
+                    <div class="ideas-container">
+                        <div class="flex-row justify-between align-center mb-6">
+                            <h3>💡 คลังไอเดีย & Brain Dump</h3>
+                            <button id="btn-add-idea-modal" class="btn btn-primary">+ จดไอเดียใหม่</button>
+                        </div>
+
+                        <div id="ideas-grid-container" class="grid-3-cols gap-4">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 7. SETTINGS SCREEN -->
+                <section id="settings-tab" class="tab-panel">
+                    <div class="settings-container max-w-600 margin-auto glass-panel p-6">
+                        <h3>⚙️ ตั้งค่าระบบ Reen AI Command Center</h3>
+                        <p class="text-sm text-muted mb-6">จัดการการเชื่อมต่อ Google API ความจำ AI และข้อมูลสำรอง</p>
+
+                        <!-- AI Memory Inspector -->
+                        <div class="setting-group mb-6 p-4 border-radius-md bg-glass border-glass">
+                            <h4 class="mb-2">🧠 AI Memory & User Profile</h4>
+                            <p class="text-xs text-muted mb-3">ข้อมูลบริบทที่ AI จดจำไว้เกี่ยวกับผู้ใช้และโปรเจกต์</p>
+                            <ul class="text-xs text-muted flex-column gap-1 mb-3">
+                                <li>• ชื่อผู้ใช้งาน: พี่รีน (Executive Commander)</li>
+                                <li>• โปรเจกต์หลัก: Sino House Phuket, PMS Kiralux System, sitekira</li>
+                                <li>• ลูกน้อง/ผู้รับผิดชอบ: มิว, ช่างประจำชั้น 2</li>
+                            </ul>
+                            <button id="btn-clear-ai-memory" class="btn btn-sm btn-outline">🗑️ ล้างความจำ AI</button>
+                        </div>
+
+                        <div class="setting-group mb-6">
+                            <label class="font-semibold block mb-2">Google Client ID (สำหรับ Gmail/Calendar):</label>
+                            <input type="text" id="setting-client-id" class="form-control mb-3" placeholder="ระบุ Client ID จาก Google Cloud Console">
+                            <button id="btn-save-google-settings" class="btn btn-primary width-full">บันทึก & เชื่อมต่อ Google</button>
+                        </div>
+
+                        <div class="setting-group border-top border-glass pt-6 mb-6">
+                            <label class="font-semibold block mb-2">การสำรองและคืนค่าข้อมูล (Backup & Restore):</label>
+                            <div class="flex-row gap-3 mb-3">
+                                <button id="btn-export-json" class="btn btn-outline flex-1">📥 สำรองข้อมูล (JSON)</button>
+                                <label class="btn btn-primary flex-1 text-center cursor-pointer">
+                                    📤 คืนค่าไฟล์ JSON
+                                    <input type="file" id="input-restore-json" accept=".json" class="hidden">
+                                </label>
+                            </div>
+                            <button id="btn-reset-data" class="btn btn-danger width-full">🔄 ล้างข้อมูลทั้งหมดในเครื่อง</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Floating Mic Button for Mobile & Quick Commands -->
+    <div class="floating-mic-container">
+        <button id="floating-mic-btn" class="floating-mic-btn" title="พูดสั่งงาน Reen AI">
+            <span class="mic-icon">🎙️</span>
+            <span class="mic-pulse"></span>
+        </button>
+    </div>
+
+    <!-- Fullscreen Voice Conversation Overlay Modal -->
+    <div id="voice-overlay-modal" class="voice-modal-overlay hidden">
+        <div class="voice-modal-content">
+            <button id="close-voice-modal" class="voice-close-btn">&times;</button>
+            <div class="voice-avatar-sphere" id="voice-avatar">
+                <div class="sphere-inner"></div>
+            </div>
+            <h3 id="voice-status-text" class="mt-4">กำลังฟังคำสั่งพี่รีน...</h3>
+            <p id="voice-transcript-text" class="text-sm text-muted mt-2">พูด เช่น "วันนี้สั่งงานมิว ให้ทำระบบใบลา" หรือ "จ่ายค่าโดเมน sitekira 5000"</p>
+            <div class="voice-controls mt-6 flex-row gap-4 align-center justify-center">
+                <button id="voice-modal-mic-toggle" class="btn btn-voice-gradient">🎙️ แตะเพื่อพูด</button>
+                <button id="voice-modal-stop-speaker" class="btn btn-outline">🔇 ปิดเสียงพูด</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+    <audio id="reminder-sound-clip" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
+
+    <!-- PWA Registration Script -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Registration failed: ', err));
+            });
+        }
+    </script>
+
+    <!-- Load Scripts in Order -->
+    <script src="googleApiHelper.js"></script>
+    <script src="emailSummarizer.js"></script>
+    <script src="aiAssistantHelper.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
