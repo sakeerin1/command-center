@@ -842,6 +842,45 @@ body.dark-theme::before {
         justify-content: center;
         border-radius: var(--radius-md);
         height: 54px;
+        font-size: 1.1rem; /* Bumping button text size */
+    }
+
+    /* Grids */
+    .dashboard-grid, .kanban-grid, .grid-3-cols, .grid-2-cols {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .col-span-2, .col-span-3 { grid-column: span 1; }
+    
+    /* Typography Scaling for Mobile Readability */
+    .glass-panel h3 {
+        font-size: 1.35rem; /* Larger headers in cards */
+        margin-bottom: 1rem;
+    }
+    
+    .task-item-card {
+        font-size: 1.05rem; /* Larger main task text */
+        padding: 1.25rem;
+    }
+    
+    .task-meta {
+        font-size: 0.85rem; /* Bumped up from 0.75rem */
+        margin-top: 0.65rem;
+    }
+    
+    .stat-pill .stat-lbl {
+        font-size: 0.9rem; /* Bumped up from 0.8rem */
+    }
+    
+    p {
+        font-size: 1.05rem;
+        line-height: 1.6;
+    }
+    
+    .badge {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.85rem;
     }
 
     /* Segmented Control Pill Filters */
