@@ -56,6 +56,35 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* --- PREMIUM MICRO-DETAILS (Scrollbars & Selection) --- */
+::selection {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Thinner, more delicate SVGs (Apple SF Symbols style) */
+svg {
+    stroke-width: 1.5px !important;
+}
+
 /* --- DYNAMIC BREATHING BACKGROUND --- */
 body.dark-theme {
     background-color: var(--bg-main);
@@ -146,7 +175,9 @@ body.dark-theme::before {
     font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: -0.03em;
-    color: var(--text-primary);
+    background: linear-gradient(135deg, #ffffff 0%, #b0b5ba 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .brand-name span {
@@ -248,7 +279,7 @@ body.dark-theme::before {
 .main-content {
     flex: 1;
     margin-left: 280px;
-    padding: 3.5rem 5rem;
+    padding: max(3.5rem, env(safe-area-inset-top)) 5rem 3.5rem;
     min-height: 100vh;
 }
 
@@ -260,10 +291,22 @@ body.dark-theme::before {
     margin-bottom: 3rem;
 }
 
+/* Metallic Titanium Text Gradient for Premium Feel */
+.metallic-text {
+    background: linear-gradient(135deg, #ffffff 0%, #a0a5aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
 .header-title h2 {
     font-size: 2.25rem;
     font-weight: 700;
     letter-spacing: -0.04em;
+    background: linear-gradient(135deg, #ffffff 0%, #b0b5ba 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #header-subtitle {
