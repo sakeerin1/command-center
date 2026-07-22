@@ -2,7 +2,8 @@
  * ==========================================================================
  * REEN AI EXECUTIVE COMMAND CENTER - MAIN LOGIC (app.js)
  * Single Command Center Hub with Auto-Intent Extraction & 4-Pillar Dashboard
- * (📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ)
+ * (📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ) + Executive Help Guide Modal
+ * Instant Response, Sound Alerts, Enter Key Handling & AI Chat Sync
  * ==========================================================================
  */
 
@@ -32,8 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         expenses: JSON.parse(localStorage.getItem('reen_expenses')) || [
             { id: 'exp_1', title: 'ค่าโดเมน sitekira', project: 'sitekira', amount: 5000, date: '2026-07-22' }
         ],
-        meetingNotes: JSON.parse(localStorage.getItem('reen_meetings')) || [],
-        reminders: JSON.parse(localStorage.getItem('reen_reminders')) || [],
+        chatHistory: JSON.parse(localStorage.getItem('reen_chat_history')) || [
+            { sender: 'assistant', text: 'สวัสดีครับพี่รีน ผมคือ Reen AI ผู้ช่วยส่วนตัวของคุณ พี่รีนสามารถพิมพ์คำสั่ง หรือพูดสั่งงานเรื่องงาน มอบหมายลูกน้อง หรือบันทึกรายจ่ายได้ตลอดเวลาเลยครับ!' }
+        ],
         activeTab: 'dashboard',
         todayFilter: 'all',
         todayViewMode: 'list',
@@ -63,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const commandExtractedBadge = document.getElementById('command-extracted-badge');
     const commandExtractedText = document.getElementById('command-extracted-text');
 
-    // Voice Modal Elements
+    // Voice & Help Modal Elements
     const floatingMicBtn = document.getElementById('floating-mic-btn');
     const voiceOverlayModal = document.getElementById('voice-overlay-modal');
     const closeVoiceModal = document.getElementById('close-voice-modal');
@@ -71,6 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const voiceTranscriptText = document.getElementById('voice-transcript-text');
     const voiceModalMicToggle = document.getElementById('voice-modal-mic-toggle');
     const voiceModalStopSpeaker = document.getElementById('voice-modal-stop-speaker');
+
+    const helpModalOverlay = document.getElementById('help-modal-overlay');
+    const btnOpenHelpModal = document.getElementById('btn-open-help-modal');
+    const closeHelpModal = document.getElementById('close-help-modal');
+    const btnCloseHelpConfirm = document.getElementById('btn-close-help-confirm');
 
     // --- CLOCK POLLING ---
     function updateClock() {
@@ -138,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (state.activeTab === 'dashboard') renderDashboard();
         else if (state.activeTab === 'today') renderTodayTasks();
         else if (state.activeTab === 'projects') renderProjects();
+        else if (state.activeTab === 'assistant') renderChatMessages();
         else if (state.activeTab === 'revenue') renderRevenue();
         else if (state.activeTab === 'ideas') renderIdeas();
     }
@@ -160,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statIdeas) statIdeas.textContent = ideasCount;
     }
 
-    // --- RENDER DASHBOARD HOME (4 PILLARS: 📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ) ---
+    // --- RENDER DASHBOARD HOME ---
     function renderDashboard() {
         // Pillar 3: ⏰ เตือน (Reminders & Follow-ups)
         const priorityContainer = document.getElementById('dash-priority-tasks-list');
@@ -292,30 +300,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
+    }
 
-        // Kanban View
-        const statuses = ['todo', 'in_progress', 'waiting', 'completed'];
-        statuses.forEach(status => {
-            const col = document.getElementById(`kanban-${status.replace('_', '-')}`);
-            const countEl = document.getElementById(`count-${status.replace('_', '-')}`);
-            const tasksInStatus = filteredTasks.filter(t => {
-                if (status === 'completed') return t.completed;
-                if (status === 'todo') return !t.completed && (t.status === 'todo' || !t.status);
-                return !t.completed && t.status === status;
-            });
+    // --- RENDER AI CHAT MESSAGES ---
+    function renderChatMessages() {
+        const chatList = document.getElementById('chat-messages-list');
+        if (!chatList) return;
 
-            if (countEl) countEl.textContent = tasksInStatus.length;
-            if (col) {
-                col.innerHTML = tasksInStatus.map(t => `
-                    <div class="glass-panel p-3 border-radius-md">
-                        <strong class="text-sm block mb-1">${escapeHtml(t.title)}</strong>
-                        <div class="text-xs text-muted mb-2">${escapeHtml(t.project)}</div>
-                        ${t.assignee ? `<div class="assignee-tag text-xs inline-block mb-1">👤 ${escapeHtml(t.assignee)}</div>` : ''}
-                        ${t.expense ? `<div class="expense-tag text-xs inline-block mb-1">💳 ฿${t.expense.toLocaleString()}</div>` : ''}
-                    </div>
-                `).join('');
-            }
-        });
+        chatList.innerHTML = state.chatHistory.map(msg => `
+            <div class="chat-message ${msg.sender === 'user' ? 'user' : 'assistant'} mb-3">
+                <div class="msg-bubble p-3 border-radius-md ${msg.sender === 'user' ? 'bg-primary text-white ml-auto max-w-400' : 'bg-glass border-glass max-w-500'}">
+                    ${escapeHtml(msg.text).replace(/\n/g, '<br>')}
+                </div>
+            </div>
+        `).join('');
+
+        chatList.scrollTop = chatList.scrollHeight;
     }
 
     // --- TASK ACTIONS ---
@@ -425,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             expContainer.innerHTML = `<p class="text-muted text-center py-4">ยังไม่มีรายการบันทึกรายจ่าย</p>`;
         } else {
             expContainer.innerHTML = state.expenses.map(e => `
-                <div class="expense-item p-3 border-radius-md bg-glass flex-row justify-between align-center">
+                <div class="expense-item p-3 border-radius-md bg-glass flex-row justify-between align-center mb-2">
                     <div>
                         <strong>${escapeHtml(e.title)}</strong>
                         <p class="text-xs text-muted">โปรเจกต์: ${escapeHtml(e.project)} | วันที่: ${e.date}</p>
@@ -445,13 +445,10 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = `<p class="text-muted text-center py-6 col-span-3">ไม่มีรายการไอเดียที่บันทึกไว้</p>`;
         } else {
             container.innerHTML = state.ideas.map(i => `
-                <div class="glass-panel p-4 flex-column justify-between">
+                <div class="glass-panel p-4 flex-column justify-between mb-2">
                     <div>
                         <span class="badge badge-cyan mb-2">${escapeHtml(i.project || 'General')}</span>
                         <h4>💡 ${escapeHtml(i.title)}</h4>
-                    </div>
-                    <div class="mt-4 flex-row justify-end">
-                        <button class="btn btn-sm btn-outline btn-convert-idea" data-id="${i.id}">แปลงเป็น งาน Todo 📝</button>
                     </div>
                 </div>
             `).join('');
@@ -462,7 +459,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function executeNaturalLanguageCommand(text) {
         if (!text || typeof ReenAIEngine === 'undefined') return;
 
+        // Play Sound Feedback
+        const soundClip = document.getElementById('reminder-sound-clip');
+        if (soundClip) {
+            soundClip.play().catch(() => {});
+        }
+
         const parsed = ReenAIEngine.parseIntent(text);
+        let aiReply = '';
 
         // Update Extracted Badge
         if (commandExtractedBadge && commandExtractedText) {
@@ -471,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (parsed.intent === 'create_task') desc = `📝 งานใหม่: "${parsed.title}" ${parsed.assignee ? `(มอบหมาย: ${parsed.assignee})` : ''}`;
             else if (parsed.intent === 'record_expense') desc = `💳 บันทึกรายจ่าย: "${parsed.title}" ฿${parsed.amount.toLocaleString()} [${parsed.project}]`;
             else if (parsed.intent === 'create_idea') desc = `💡 จดไอเดีย: "${parsed.title}"`;
-            else desc = `🤖 ตรวจสอบคำสั่ง: ${parsed.intent}`;
+            else desc = `🤖 AI สกัดจับใจความเรียบร้อย`;
 
             commandExtractedText.textContent = desc;
         }
@@ -491,8 +495,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 created_at: new Date().toISOString()
             };
             saveState('tasks', [newTask, ...state.tasks]);
-            showToast('สั่งงานสำเร็จ!', `เพิ่มงาน "${parsed.title}" ${parsed.assignee ? `(ผู้รับผิดชอบ: ${parsed.assignee})` : ''}`, 'success');
-            speakText(`รับทราบครับพี่รีน สั่งงาน ${parsed.title} ${parsed.assignee ? `ให้ ${parsed.assignee}` : ''} เรียบร้อยแล้วครับ`);
+            aiReply = `รับทราบครับพี่รีน เพิ่มงาน "${parsed.title}" ${parsed.assignee ? `(มอบหมายให้ ${parsed.assignee})` : ''} เรียบร้อยครับ!`;
+            showToast('สั่งงานสำเร็จ!', aiReply, 'success');
+            speakText(aiReply);
         } 
         else if (parsed.intent === 'record_expense') {
             const newExp = { id: 'exp_' + Date.now(), title: parsed.title, project: parsed.project, amount: parsed.amount, date: new Date().toISOString().split('T')[0] };
@@ -501,43 +506,52 @@ document.addEventListener('DOMContentLoaded', () => {
             const expTask = { id: 'task_' + Date.now(), title: `จ่าย ${parsed.title}`, project: parsed.project, category: 'Expense', priority: 'high', status: 'completed', assignee: '', expense: parsed.amount, due: null, completed: true, created_at: new Date().toISOString() };
             saveState('tasks', [expTask, ...state.tasks]);
             
-            showToast('บันทึกรายจ่ายสำเร็จ!', `บันทึกค่าใช้จ่าย ${parsed.title} จำนวน ฿${parsed.amount.toLocaleString()} ในโปรเจกต์ ${parsed.project}`, 'success');
-            speakText(`บันทึกรายจ่าย ${parsed.title} จำนวน ${parsed.amount} บาท ให้โปรเจกต์ ${parsed.project} เรียบร้อยครับ`);
+            aiReply = `บันทึกรายจ่าย ${parsed.title} จำนวน ฿${parsed.amount.toLocaleString()} ในโปรเจกต์ ${parsed.project} เรียบร้อยครับ!`;
+            showToast('บันทึกรายจ่ายสำเร็จ!', aiReply, 'success');
+            speakText(aiReply);
         }
         else if (parsed.intent === 'create_idea') {
             const newIdea = { id: 'idea_' + Date.now(), title: parsed.title, project: parsed.project, status: 'New' };
             saveState('ideas', [newIdea, ...state.ideas]);
-            showToast('จดไอเดียสำเร็จ!', `บันทึกไอเดีย "${parsed.title}" เรียบร้อยแล้ว`, 'info');
-            speakText(`จดไอเดีย ${parsed.title} ให้แล้วครับพี่รีน`);
+            aiReply = `จดไอเดีย "${parsed.title}" ลงในคลังจำให้เรียบร้อยครับพี่รีน!`;
+            showToast('จดไอเดียสำเร็จ!', aiReply, 'info');
+            speakText(aiReply);
         }
         else if (parsed.intent === 'ask_oldest_task') {
             const pending = state.tasks.filter(t => !t.completed);
             if (pending.length === 0) {
-                speakText('ตอนนี้ไม่มีงานค้างเลยครับพี่รีน ทำเสร็จหมดแล้ว!');
+                aiReply = 'ตอนนี้ไม่มีงานค้างเลยครับพี่รีน ทำเสร็จหมดแล้ว!';
             } else {
                 const oldest = pending[pending.length - 1];
-                speakText(`งานที่ค้างนานที่สุดคือ ${oldest.title} ของโปรเจกต์ ${oldest.project} ครับพี่รีน`);
+                aiReply = `งานที่ค้างนานที่สุดคือ "${oldest.title}" ของโปรเจกต์ ${oldest.project} ครับพี่รีน`;
             }
+            speakText(aiReply);
         }
         else if (parsed.intent === 'ask_all_projects_summary') {
-            let projSummary = `สรุปทุกโปรเจกต์ให้ฟังครับพี่รีน: `;
+            aiReply = `สรุปทุกโปรเจกต์ให้ฟังครับพี่รีน: `;
             state.projects.forEach(p => {
-                projSummary += `โปรเจกต์ ${p.name} ความคืบหน้า ${p.progress} เปอร์เซ็นต์, `;
+                aiReply += `โปรเจกต์ ${p.name} ความคืบหน้า ${p.progress} เปอร์เซ็นต์, `;
             });
-            speakText(projSummary);
+            speakText(aiReply);
         }
         else if (parsed.intent === 'get_daily_brief') {
-            const brief = ReenAIEngine.generateDailyBrief(state);
-            speakText(brief);
+            aiReply = ReenAIEngine.generateDailyBrief(state);
+            speakText(aiReply);
         }
         else {
-            speakText(`รับทราบคำสั่ง ${text} เรียบร้อยครับพี่รีน`);
+            aiReply = `รับทราบคำสั่ง "${text}" เรียบร้อยครับพี่รีน!`;
+            showToast('รับทราบคำสั่ง', aiReply, 'info');
+            speakText(aiReply);
         }
+
+        // Push to Chat History
+        const updatedChat = [...state.chatHistory, { sender: 'user', text: text }, { sender: 'assistant', text: aiReply }];
+        saveState('chatHistory', updatedChat);
 
         renderCurrentTab();
     }
 
-    // Bind Quick Command Submit
+    // Bind Quick Command Submit & Enter Key
     if (globalSubmitBtn && globalCommandInput) {
         globalSubmitBtn.addEventListener('click', () => {
             const val = globalCommandInput.value.trim();
@@ -545,6 +559,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 executeNaturalLanguageCommand(val);
                 globalCommandInput.value = '';
             }
+        });
+
+        globalCommandInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const val = globalCommandInput.value.trim();
+                if (val) {
+                    executeNaturalLanguageCommand(val);
+                    globalCommandInput.value = '';
+                }
+            }
+        });
+    }
+
+    // Chat Tab Form Listener
+    const chatInputForm = document.getElementById('chat-input-form');
+    const chatInputText = document.getElementById('chat-input-text');
+    if (chatInputForm && chatInputText) {
+        chatInputForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = chatInputText.value.trim();
+            if (val) {
+                executeNaturalLanguageCommand(val);
+                chatInputText.value = '';
+            }
+        });
+    }
+
+    // Help Modal Controls
+    if (btnOpenHelpModal && helpModalOverlay) {
+        btnOpenHelpModal.addEventListener('click', () => {
+            helpModalOverlay.classList.remove('hidden');
+        });
+    }
+
+    if (closeHelpModal && helpModalOverlay) {
+        closeHelpModal.addEventListener('click', () => {
+            helpModalOverlay.classList.add('hidden');
+        });
+    }
+
+    if (btnCloseHelpConfirm && helpModalOverlay) {
+        btnCloseHelpConfirm.addEventListener('click', () => {
+            helpModalOverlay.classList.add('hidden');
         });
     }
 

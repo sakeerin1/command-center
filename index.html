@@ -94,7 +94,8 @@
             </nav>
 
             <div class="sidebar-footer">
-                <p>Reen AI Assistant v4.0</p>
+                <button id="btn-open-help-modal" class="btn btn-sm btn-outline width-full mb-3">❓ คู่มือการใช้งาน</button>
+                <p>Reen AI Assistant v4.5</p>
                 <span class="status-indicator online">Online & Ready</span>
             </div>
         </aside>
@@ -472,6 +473,31 @@
 
             </div>
         </main>
+    </div>
+
+    <!-- Executive Help Guide Modal -->
+    <div id="help-modal-overlay" class="voice-modal-overlay hidden">
+        <div class="voice-modal-content max-w-600 p-6 text-left" style="background: #0f172a; border: 1px solid rgba(255,255,255,0.2);">
+            <button id="close-help-modal" class="voice-close-btn">&times;</button>
+            <h3 class="mb-3 text-gold">❓ คู่มือการใช้งาน Reen AI Command Center</h3>
+            <p class="text-xs text-muted mb-4">ระบบถูกดีไซน์ให้ใช้ง่ายที่สุด สั่งงานหรือบอกเล่าอะไรก็ได้ แล้ว AI จะคัดแยกให้อัตโนมัติ:</p>
+            
+            <div class="flex-column gap-3 text-xs mb-4">
+                <div class="p-3 bg-glass border-radius-md">
+                    <strong class="text-gold block mb-1">🗣️ ตัวอย่างการสั่งงานด้วยเสียง/พิมพ์:</strong>
+                    <p>• <em>"วันนี้สั่งงานมิว ให้ทำระบบใบลา กำหนดส่งวันที่ 30"</em> ➔ AI สร้างงาน + มอบหมายมิว</p>
+                    <p class="mt-1">• <em>"วันนี้จ่ายค่าโดเมน sitekira 5000"</em> ➔ AI บันทึกรายจ่าย ฿5,000 แยกโปรเจกต์</p>
+                    <p class="mt-1">• <em>"งานไหนค้างนานที่สุด"</em> ➔ AI ค้นหางานเก่าสุดอ่านออกเสียง</p>
+                </div>
+
+                <div class="p-3 bg-glass border-radius-md">
+                    <strong class="text-cyan block mb-1">📱 ติดตั้งแอปบนมือถือ (PWA):</strong>
+                    <p>เปิดเว็บ `foodphuket.com` บน Chrome/Safari มือถือ ➔ กดเมนูเบราว์เซอร์ ➔ กด <strong>"เพิ่มไปยังหน้าจอโฮม" (Add to Home Screen)</strong></p>
+                </div>
+            </div>
+
+            <button id="btn-close-help-confirm" class="btn btn-primary width-full">เข้าใจแล้ว</button>
+        </div>
     </div>
 
     <!-- Floating Mic Button for Mobile & Quick Commands -->
