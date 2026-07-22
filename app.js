@@ -3,7 +3,7 @@
  * REEN AI EXECUTIVE COMMAND CENTER - MAIN LOGIC (app.js)
  * Single Command Center Hub with Auto-Intent Extraction & 4-Pillar Dashboard
  * (📢 แจ้ง / 🤝 ช่วย / ⏰ เตือน / 🧠 จำ) + Executive Help Guide Modal
- * Instant Response, Sound Alerts, Enter Key Handling & AI Chat Sync
+ * Instant Tab Switching with Direct Style Display Rules (block / none)
  * ==========================================================================
  */
 
@@ -52,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- DOM REFERENCES ---
     const navItems = document.querySelectorAll('.nav-item');
-    const tabPanels = document.querySelectorAll('.tab-panel');
     const activeTabTitle = document.getElementById('active-tab-title');
     const headerSubtitle = document.getElementById('header-subtitle');
     const liveTime = document.getElementById('live-time');
@@ -94,17 +93,29 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateClock, 1000);
     updateClock();
 
-    // --- TAB NAVIGATION ---
+    // --- DIRECT DOM TAB NAVIGATION (GUARANTEED BLOCK / NONE SWITCHING) ---
     function switchTab(tabId) {
         state.activeTab = tabId;
+
+        // Update nav buttons active state
         navItems.forEach(item => {
-            if (item.getAttribute('data-tab') === tabId) item.classList.add('active');
-            else item.classList.remove('active');
+            if (item.getAttribute('data-tab') === tabId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
         });
 
-        tabPanels.forEach(panel => {
-            if (panel.id === `${tabId}-tab`) panel.classList.add('active');
-            else panel.classList.remove('active');
+        // Directly update style.display on all tab panels to guarantee visual switching
+        const allPanels = document.querySelectorAll('.tab-panel');
+        allPanels.forEach(panel => {
+            if (panel.id === `${tabId}-tab`) {
+                panel.classList.add('active');
+                panel.style.setProperty('display', 'block', 'important');
+            } else {
+                panel.classList.remove('active');
+                panel.style.setProperty('display', 'none', 'important');
+            }
         });
 
         const tabTitleMap = {
@@ -126,16 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const tab = item.getAttribute('data-tab');
-            switchTab(tab);
+        item.addEventListener('click', (e) => {
+            const tabBtn = e.currentTarget;
+            const tab = tabBtn.getAttribute('data-tab');
+            if (tab) switchTab(tab);
         });
     });
 
     document.querySelectorAll('[data-tab-trigger]').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const tab = e.currentTarget.getAttribute('data-tab-trigger');
-            switchTab(tab);
+            if (tab) switchTab(tab);
         });
     });
 
