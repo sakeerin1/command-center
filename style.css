@@ -938,9 +938,28 @@ body.dark-theme::before {
         padding: 1.25rem !important;
     }
 
-    /* Card Headers */
+    /* Card Headers & Specific Fix for "Today" Tab Tasks */
     .glass-panel h3, .task-item-card {
         font-size: 1.15rem; 
+    }
+    
+    .today-container .task-item-card strong {
+        font-size: 1.25rem !important; /* Make task titles explicitly large */
+        display: block;
+        margin-bottom: 0.25rem;
+    }
+    
+    .today-container .task-meta, .today-container .task-meta span {
+        font-size: 0.95rem !important; /* Bump up task details */
+    }
+    
+    .today-container .filter-btn, 
+    .today-container .view-mode-selector .btn {
+        font-size: 1.05rem !important; /* Make filter buttons larger */
+    }
+    
+    #new-task-form input, #new-task-form select, #new-task-form button {
+        font-size: 1.1rem !important;
     }
 
     /* Segmented Control Pill Filters */
