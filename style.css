@@ -940,6 +940,7 @@ body.dark-theme::before {
     html {
         /* Bumps the base size from 16px to 18px, scaling ALL rem values proportionally */
         font-size: 18px !important; 
+        -webkit-text-size-adjust: 100%; /* Prevent iOS Safari from auto-scaling down text */
     }
 
     /* Universal minimums for readability across all tabs */

@@ -651,14 +651,21 @@ document.addEventListener('DOMContentLoaded', () => {
         recognition.interimResults = false;
 
         recognition.onstart = () => {
-            if (voiceStatusText) voiceStatusText.textContent = 'กำลังฟังคำสั่งพี่รีน... (กรุณาพูดได้เลย)';
+            if (voiceStatusText) voiceStatusText.textContent = 'กำลังฟังคำสั่งพี่รีน... (พูดจบแล้วระบบจะส่งให้อัตโนมัติ)';
             showToast('กำลังฟังเสียง...', 'พูดคำสั่ง เช่น "สั่งงานมิวให้ทำใบลา"', 'info');
         };
 
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
-            if (voiceTranscriptText) voiceTranscriptText.textContent = `คำสั่งที่ได้ยิน: "${transcript}"`;
+            if (voiceTranscriptText) voiceTranscriptText.textContent = `กำลังประมวลผลคำสั่ง: "${transcript}"...`;
+            if (voiceStatusText) voiceStatusText.textContent = 'ประมวลผลเสร็จสิ้น!';
+            
             if (onResultCallback) onResultCallback(transcript);
+            
+            // Auto-close modal after processing
+            setTimeout(() => {
+                if (voiceOverlayModal) voiceOverlayModal.classList.add('hidden');
+            }, 1200);
         };
 
         recognition.onerror = () => {
