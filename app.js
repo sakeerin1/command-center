@@ -669,14 +669,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Floating Mic & Voice Modal Events
-    if (floatingMicBtn) {
-        floatingMicBtn.addEventListener('click', () => {
-            if (voiceOverlayModal) voiceOverlayModal.classList.remove('hidden');
-            startVoiceRecognition((text) => {
-                executeNaturalLanguageCommand(text);
-            });
+    const openVoiceAction = () => {
+        if (voiceOverlayModal) voiceOverlayModal.classList.remove('hidden');
+        startVoiceRecognition((text) => {
+            executeNaturalLanguageCommand(text);
         });
-    }
+    };
+
+    if (floatingMicBtn) floatingMicBtn.addEventListener('click', openVoiceAction);
+    
+    const btnOpenVoiceModal = document.getElementById('btn-open-voice-modal');
+    if (btnOpenVoiceModal) btnOpenVoiceModal.addEventListener('click', openVoiceAction);
+
+    if (globalVoiceBtn) globalVoiceBtn.addEventListener('click', openVoiceAction);
 
     if (closeVoiceModal) {
         closeVoiceModal.addEventListener('click', () => {
