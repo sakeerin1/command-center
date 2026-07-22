@@ -1,7 +1,7 @@
 /* ==========================================================================
    REEN AI EXECUTIVE COMMAND CENTER - STYLE SYSTEM (style.css)
    Executive Navy Theme (#0f172a) with Gold, Emerald & Cyan Accents.
-   Mobile-First, Touch-Optimized (48px targets, iOS Safe-Area, iOS No-Zoom 16px).
+   Mobile-First, Touch-Optimized (48px Touch Targets, iOS Safe-Area, Tab Panels).
    ========================================================================== */
 
 :root {
@@ -50,6 +50,21 @@ body.dark-theme {
 .app-container {
     display: flex;
     min-height: 100vh;
+}
+
+/* TAB PANELS VISIBILITY & ANIMATION */
+.tab-panel {
+    display: none !important;
+}
+
+.tab-panel.active {
+    display: block !important;
+    animation: fadeInTab 0.25s ease-in-out;
+}
+
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Sidebar Navigation (Desktop) */
@@ -121,6 +136,11 @@ body.dark-theme {
     transition: all 0.2s ease;
     text-align: left;
     min-height: 48px;
+    pointer-events: auto;
+}
+
+.nav-item * {
+    pointer-events: none; /* Prevents click event target issues on SVG child elements */
 }
 
 .nav-item:hover, .nav-item.active {
