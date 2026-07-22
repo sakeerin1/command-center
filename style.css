@@ -1,46 +1,60 @@
 /* ==========================================================================
-   REEN AI EXECUTIVE COMMAND CENTER - STYLE SYSTEM (style.css)
-   Executive Navy Theme (#0f172a) with Gold, Emerald & Cyan Accents.
-   Mobile-First, Touch-Optimized (48px Touch Targets, iOS Safe-Area, Tab Panels).
+   REEN AI COMMAND CENTER - APPLE VISION OS / GLASSMORPHISM EDITION
+   Monochrome, Deep Space Black, Frosted Glass, Minimalist Luxury.
    ========================================================================== */
 
 :root {
-    --bg-main: #0f172a;
-    --bg-secondary: #1e293b;
-    --bg-card: rgba(30, 41, 59, 0.75);
-    --bg-glass: rgba(255, 255, 255, 0.05);
-    --border-glass: rgba(255, 255, 255, 0.12);
+    /* Pure Monochrome Base */
+    --bg-main: #000000;
+    --bg-space: radial-gradient(circle at top right, #111116, #000000 70%);
     
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
+    /* Frosted Glass System (VisionOS Style) */
+    --glass-bg: rgba(255, 255, 255, 0.04);
+    --glass-bg-hover: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-border-highlight: rgba(255, 255, 255, 0.15);
     
-    --accent-gold: #f59e0b;
-    --accent-gold-light: #fbbf24;
-    --accent-cyan: #06b6d4;
-    --accent-emerald: #10b981;
-    --accent-rose: #f43f5e;
-    --accent-purple: #8b5cf6;
+    /* Blur Filters */
+    --blur-heavy: blur(40px) saturate(200%);
+    --blur-medium: blur(20px) saturate(150%);
     
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 18px;
-    --radius-xl: 24px;
+    /* Typography Colors */
+    --text-primary: rgba(255, 255, 255, 0.95);
+    --text-secondary: rgba(255, 255, 255, 0.55);
+    --text-tertiary: rgba(255, 255, 255, 0.35);
     
-    --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
-    --shadow-glow-gold: 0 0 20px rgba(245, 158, 11, 0.35);
-    --shadow-glow-cyan: 0 0 20px rgba(6, 182, 212, 0.35);
+    /* Squircles & Radii */
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --radius-pill: 9999px;
+    
+    /* Depth Shadows (No Neon, Pure Depth) */
+    --shadow-depth: 0 20px 40px rgba(0, 0, 0, 0.6);
+    --shadow-float: 0 10px 30px rgba(0, 0, 0, 0.8);
+    
+    /* Accent (Subtle White/Silver for action) */
+    --accent-primary: rgba(255, 255, 255, 0.9);
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Sarabun', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    /* SF Pro / San Francisco system fonts fallback */
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", 'Inter', 'Sarabun', sans-serif;
     -webkit-tap-highlight-color: transparent;
 }
 
 body.dark-theme {
-    background-color: var(--bg-main);
+    background: var(--bg-main);
+    background-image: var(--bg-space);
     color: var(--text-primary);
     min-height: 100vh;
     overflow-x: hidden;
@@ -59,131 +73,141 @@ body.dark-theme {
 
 .tab-panel.active {
     display: block !important;
-    animation: fadeInTab 0.25s ease-in-out;
+    animation: fadeInTab 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes fadeInTab {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { opacity: 0; transform: scale(0.98) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-/* Sidebar Navigation (Desktop) */
+/* ==========================================================================
+   DESKTOP SIDEBAR
+   ========================================================================== */
 .sidebar {
-    width: 260px;
-    background-color: var(--bg-secondary);
-    border-right: 1px solid var(--border-glass);
-    padding: 1.5rem;
+    width: 280px;
+    background: transparent;
+    border-right: 1px solid var(--glass-border);
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: fixed;
     height: 100vh;
     z-index: 50;
+    backdrop-filter: var(--blur-medium);
 }
 
 .brand {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
 }
 
 .brand-logo {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-cyan));
+    width: 40px;
+    height: 40px;
+    background: var(--text-primary);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--bg-main);
-    box-shadow: var(--shadow-glow-gold);
 }
 
 .brand-name h1 {
-    font-size: 1.1rem;
-    font-weight: 800;
-    letter-spacing: 1px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
     color: var(--text-primary);
 }
 
 .brand-name span {
     font-size: 0.65rem;
-    letter-spacing: 2px;
-    color: var(--accent-gold);
-    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
 }
 
 .nav-menu {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
     flex: 1;
 }
 
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1rem;
     padding: 0.85rem 1rem;
     border-radius: var(--radius-md);
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
     text-align: left;
-    min-height: 48px;
+    min-height: 44px;
     pointer-events: auto;
 }
 
 .nav-item * {
-    pointer-events: none; /* Prevents click event target issues on SVG child elements */
+    pointer-events: none;
 }
 
-.nav-item:hover, .nav-item.active {
-    background: var(--bg-glass);
-    color: var(--accent-gold);
-    border-left: 3px solid var(--accent-gold);
+.nav-item:hover {
+    background: var(--glass-bg);
+    color: var(--text-primary);
+}
+
+.nav-item.active {
+    background: var(--glass-bg-hover);
+    color: var(--text-primary);
+    box-shadow: inset 0 0 0 1px var(--glass-border);
 }
 
 .nav-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.8;
 }
 
 .sidebar-footer {
-    border-top: 1px solid var(--border-glass);
-    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+    padding-top: 1.5rem;
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--text-tertiary);
 }
 
 .status-indicator {
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
-    font-size: 0.7rem;
-    color: var(--accent-emerald);
-    margin-top: 0.25rem;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.5rem;
 }
 
 .status-indicator::before {
     content: '';
-    width: 6px;
-    height: 6px;
-    background-color: var(--accent-emerald);
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
     border-radius: 50%;
-    box-shadow: 0 0 8px var(--accent-emerald);
+    opacity: 0.8;
 }
 
-/* Main Content Area */
+/* ==========================================================================
+   MAIN CONTENT AREA
+   ========================================================================== */
 .main-content {
     flex: 1;
-    margin-left: 260px;
-    padding: 1.5rem 2rem;
+    margin-left: 280px;
+    padding: 3rem 4rem;
     min-height: 100vh;
 }
 
@@ -192,137 +216,244 @@ body.dark-theme {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .header-title h2 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
+    letter-spacing: -1px;
+}
+
+#header-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
 }
 
 .system-time-container {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    padding: 0.5rem 1rem;
-    border-radius: var(--radius-md);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    text-align: right;
 }
 
 #live-time {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--accent-cyan);
-    font-family: monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 #live-date {
-    font-size: 0.75rem;
-    color: var(--text-muted);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
 }
 
-/* Quick Voice & Command Trigger Bar (Mobile-Optimized Input) */
-.quick-command-bar {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-glass);
-    padding: 0.85rem 1rem;
+/* ==========================================================================
+   GLASSMORPHISM PANELS (Cards & Forms)
+   ========================================================================== */
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-lg);
-    margin-bottom: 1.5rem;
-    box-shadow: var(--shadow-soft);
+    padding: 1.5rem;
+    backdrop-filter: var(--blur-heavy);
+    box-shadow: var(--shadow-depth);
+    transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.input-with-voice {
-    display: flex;
-    gap: 0.75rem;
-    align-items: center;
+.glass-panel:hover {
+    border-color: var(--glass-border-highlight);
 }
 
-.input-with-voice input {
-    flex: 1;
-    background: var(--bg-main);
-    border: 1px solid var(--border-glass);
-    padding: 0.85rem 1.25rem;
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-size: 16px; /* Prevents iOS Safari Auto-Zoom on tap */
-    outline: none;
-    min-height: 48px;
+/* Remove colored highlight borders for minimalist aesthetic */
+.highlight-border-gold, .highlight-border-cyan, .highlight-border-rose { 
+    border: 1px solid var(--glass-border) !important; 
 }
 
-.input-with-voice input:focus {
-    border-color: var(--accent-gold);
-}
-
-.mic-trigger-btn {
-    background: linear-gradient(135deg, var(--accent-gold), #d97706);
-    border: none;
-    color: var(--bg-main);
-    font-weight: 700;
-    padding: 0 1.25rem;
-    height: 48px;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-/* Dashboard Grid & Layout */
+/* Dashboard Grid */
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 1.5rem;
 }
 
 .col-span-2 { grid-column: span 2; }
 .col-span-3 { grid-column: span 3; }
 
-/* Glass Panel Cards */
-.glass-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    backdrop-filter: blur(12px);
-    box-shadow: var(--shadow-soft);
+/* Quick Voice & Command Trigger Bar (Spotlight Style) */
+.quick-command-bar {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border-highlight);
+    padding: 0.5rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 2.5rem;
+    box-shadow: var(--shadow-depth);
+    backdrop-filter: var(--blur-heavy);
 }
 
-.highlight-border-gold { border: 1px solid rgba(245, 158, 11, 0.4); }
-.highlight-border-cyan { border: 1px solid rgba(6, 182, 212, 0.4); }
-.highlight-border-rose { border: 1px solid rgba(244, 63, 94, 0.4); }
+.input-with-voice {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.input-with-voice input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 1rem 1.5rem;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.input-with-voice input::placeholder {
+    color: var(--text-tertiary);
+}
+
+.mic-trigger-btn {
+    background: var(--text-primary);
+    border: none;
+    color: var(--bg-main);
+    font-weight: 600;
+    padding: 0 1.5rem;
+    height: 48px;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: opacity 0.2s ease;
+}
+
+.mic-trigger-btn:hover {
+    opacity: 0.8;
+}
 
 /* Quick Stat Pills */
 .quick-stats-bar {
     display: flex;
     gap: 1rem;
-    margin-top: 1.25rem;
+    margin-top: 1.5rem;
     flex-wrap: wrap;
 }
 
 .stat-pill {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    padding: 0.75rem 1.25rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
     border-radius: var(--radius-md);
     display: flex;
     flex-direction: column;
-    min-width: 100px;
+    min-width: 120px;
     cursor: pointer;
-    min-height: 52px;
+    backdrop-filter: var(--blur-medium);
 }
 
 .stat-pill .stat-val {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--accent-gold);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 .stat-pill .stat-lbl {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   UI COMPONENTS (Tasks, Badges, Buttons)
+   ========================================================================== */
+.task-item-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 1rem 1.25rem;
+    border-radius: var(--radius-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 56px;
+    backdrop-filter: var(--blur-medium);
+    margin-bottom: 0.5rem;
+}
+
+.task-meta {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    color: var(--text-secondary);
+}
+
+/* Minimal Badges */
+.badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
     font-size: 0.7rem;
-    color: var(--text-muted);
+    font-weight: 600;
+    background: var(--glass-border);
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+}
+
+/* Genericize colored badges to monochrome */
+.badge-gold, .badge-cyan, .badge-emerald, .badge-rose {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-primary);
+}
+
+/* Buttons */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    transition: all 0.2s ease;
+}
+
+.btn-primary { 
+    background: var(--text-primary); 
+    color: var(--bg-main); 
+}
+
+.btn-primary:hover {
+    opacity: 0.85;
+}
+
+.btn-outline { 
+    background: var(--glass-bg); 
+    border: 1px solid var(--glass-border); 
+    color: var(--text-primary); 
+}
+
+.btn-outline:hover {
+    background: var(--glass-border-highlight);
+}
+
+/* Form Controls */
+.form-control, .form-control-sm {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-size: 16px; 
+    min-height: 48px;
+    width: 100%;
+}
+
+.form-control:focus {
+    border-color: var(--accent-primary);
+    outline: none;
 }
 
 /* Audio Action Buttons */
@@ -330,86 +461,31 @@ body.dark-theme {
     display: flex;
     align-items: center;
     gap: 0.85rem;
-    padding: 0.85rem 1rem;
-    border-radius: var(--radius-md);
-    background: var(--bg-glass);
-    border: 1px solid var(--accent-gold);
-    color: var(--accent-gold);
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
     cursor: pointer;
-    min-height: 52px;
+    min-height: 60px;
     width: 100%;
+    transition: background 0.2s ease;
+}
+
+.btn-audio-action:hover {
+    background: var(--glass-border-highlight);
 }
 
 .btn-voice-gradient {
-    background: linear-gradient(135deg, var(--accent-gold), var(--accent-cyan)) !important;
+    background: var(--text-primary) !important;
     color: var(--bg-main) !important;
     font-weight: 700 !important;
     border: none !important;
 }
 
-/* Task Item Card (Touch Friendly) */
-.task-item-card {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    padding: 0.85rem 1rem;
-    border-radius: var(--radius-md);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    min-height: 52px;
-}
-
-.task-meta {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.35rem;
-    font-size: 0.7rem;
-    flex-wrap: wrap;
-}
-
-/* Badges */
-.badge {
-    padding: 0.2rem 0.6rem;
-    border-radius: 20px;
-    font-size: 0.68rem;
-    font-weight: 600;
-}
-
-.badge-gold { background: rgba(245, 158, 11, 0.2); color: var(--accent-gold); }
-.badge-cyan { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); }
-.badge-emerald { background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); }
-.badge-rose { background: rgba(244, 63, 94, 0.2); color: var(--accent-rose); }
-
-/* Buttons */
-.btn {
-    padding: 0.65rem 1.25rem;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    min-height: 44px;
-}
-
-.btn-primary { background: var(--accent-gold); color: var(--bg-main); }
-.btn-outline { background: transparent; border: 1px solid var(--border-glass); color: var(--text-primary); }
-
-/* Form Controls */
-.form-control, .form-control-sm {
-    background: var(--bg-main);
-    border: 1px solid var(--border-glass);
-    padding: 0.65rem 1rem;
-    border-radius: var(--radius-md);
-    color: var(--text-primary);
-    font-size: 16px; /* Prevents iOS Safari Auto-Zoom */
-    min-height: 44px;
-}
-
-/* Floating Mic Button (Mobile Touch Friendly) */
+/* ==========================================================================
+   VOICE OVERLAY & FLOATING MIC
+   ========================================================================== */
 .floating-mic-container {
     position: fixed;
     bottom: 2rem;
@@ -420,17 +496,22 @@ body.dark-theme {
 .floating-mic-btn {
     width: 64px;
     height: 64px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-gold), #d97706);
+    border-radius: var(--radius-pill);
+    background: var(--text-primary);
     border: none;
     color: var(--bg-main);
     font-size: 1.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: var(--shadow-glow-gold);
+    box-shadow: var(--shadow-float);
     cursor: pointer;
     position: relative;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-mic-btn:active {
+    transform: scale(0.9);
 }
 
 .mic-pulse {
@@ -438,24 +519,24 @@ body.dark-theme {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    border: 2px solid var(--accent-gold);
-    animation: pulseWave 2s infinite;
+    border: 1px solid var(--text-primary);
+    animation: pulseWave 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @keyframes pulseWave {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(1.6); opacity: 0; }
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.8); opacity: 0; }
 }
 
-/* Voice Conversation Overlay Modal */
+/* Voice Modal (Frosted Glass Fullscreen) */
 .voice-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(15, 23, 42, 0.96);
-    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: var(--blur-heavy);
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -466,78 +547,88 @@ body.dark-theme {
     text-align: center;
     max-width: 500px;
     width: 90%;
-    padding: 2rem;
+    padding: 3rem 2rem;
     position: relative;
+    background: transparent;
 }
 
 .voice-close-btn {
     position: absolute;
-    top: -1rem;
+    top: -2rem;
     right: 0;
     background: transparent;
     border: none;
-    color: var(--text-muted);
-    font-size: 2.2rem;
+    color: var(--text-secondary);
+    font-size: 2.5rem;
     cursor: pointer;
     padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.voice-close-btn:hover {
+    color: var(--text-primary);
+}
+
+.voice-avatar-sphere {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: radial-gradient(circle at top right, rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+    box-shadow: 0 0 40px rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: sphereFloat 6s ease-in-out infinite;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+@keyframes sphereFloat {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-15px) scale(1.02); }
 }
 
 /* ==========================================================================
    MOBILE SMARTPHONE OPTIMIZATIONS (<= 768px Screens)
-   Smooth Flow & Ergonomics (Touch Targets, Safe-Area, Breathing Room)
+   Apple VisionOS Floating Pill Dock & Soft Cards
    ========================================================================== */
-html {
-    scroll-behavior: smooth;
-}
-
 @media (max-width: 768px) {
-    /* Header Flow on Small Screens */
     .header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
     
     .header-title h2 {
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-    }
-    
-    #header-subtitle {
-        font-size: 0.8rem;
-        line-height: 1.3;
-        opacity: 0.8;
-    }
-    
-    .system-time-container {
-        align-items: flex-start;
-        width: 100%;
-        padding: 0.65rem 0.85rem;
-        background: transparent;
-        border: none;
-        padding-left: 0;
-    }
-    
-    #live-time {
         font-size: 1.5rem;
     }
     
-    /* Ultra-Clean Mobile Bottom Navigation Bar */
+    .system-time-container {
+        padding: 0;
+        margin-bottom: 0.5rem;
+    }
+    
+    #live-time {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+    }
+    
+    /* FLOATING PILL DOCK (VisionOS Style Mobile Nav) */
     .sidebar {
-        width: 100%;
+        width: calc(100% - 2rem);
         height: 72px;
         top: auto;
-        bottom: 0;
+        bottom: 2rem;
+        left: 1rem;
+        right: 1rem;
         flex-direction: row;
         padding: 0.5rem 1rem;
-        padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
-        border-right: none;
-        border-top: 1px solid rgba(255,255,255,0.08);
-        background: rgba(15, 23, 42, 0.85);
-        backdrop-filter: blur(25px) saturate(180%);
+        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(20, 20, 20, 0.7);
+        backdrop-filter: var(--blur-heavy);
+        border-radius: 40px;
         z-index: 100;
-        box-shadow: 0 -10px 30px rgba(0,0,0,0.4);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.8);
     }
     
     .brand, .sidebar-footer { display: none; }
@@ -555,14 +646,12 @@ html {
         gap: 0;
         min-height: 50px;
         justify-content: center;
-        border-left: none !important;
-        border-bottom: none !important;
+        border: none !important;
         flex: 1;
-        border-radius: var(--radius-xl);
+        border-radius: var(--radius-pill);
         background: transparent !important;
     }
 
-    /* Hide text labels on mobile bottom nav for a cleaner iOS-like feel */
     .nav-item span {
         display: none;
     }
@@ -570,65 +659,61 @@ html {
     .nav-icon {
         width: 26px;
         height: 26px;
-        opacity: 0.6;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0.5;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .nav-item.active .nav-icon {
         opacity: 1;
-        color: var(--accent-gold);
-        transform: translateY(-2px) scale(1.1);
-        filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.4));
+        color: var(--text-primary);
+        transform: translateY(-4px) scale(1.15);
+        filter: drop-shadow(0 4px 10px rgba(255,255,255,0.3));
     }
     
-    /* Hide some less frequently used tabs on mobile bottom nav to increase tap targets */
     .nav-item[data-tab="revenue"], 
     .nav-item[data-tab="ideas"] {
         display: none !important;
     }
     
-    /* Maximize Screen Real Estate & Card Ergonomics */
     .main-content {
         margin-left: 0;
-        padding: 1.25rem 0.85rem;
-        padding-bottom: 110px; /* Clears floating mic & bottom nav smoothly */
+        padding: 1.5rem 1rem;
+        padding-bottom: 140px; /* Clears floating dock & FAB */
     }
     
     .glass-panel {
         padding: 1.25rem;
-        border-radius: var(--radius-xl); /* Softer, bubblier corners for mobile */
-        border: 1px solid rgba(255,255,255,0.06);
-        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-depth);
     }
     
-    /* Quick Command Bar Stacking on Phone */
+    /* Spotlight Command Bar */
     .quick-command-bar {
-        border-radius: var(--radius-xl);
-        padding: 1rem;
-        background: rgba(30, 41, 59, 0.6);
-        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: var(--radius-lg);
+        padding: 0.75rem;
+        background: var(--glass-bg);
     }
     
     .input-with-voice {
         flex-direction: column;
-        gap: 0.65rem;
+        gap: 0.75rem;
     }
 
     .input-with-voice input {
         width: 100%;
         text-align: left;
-        background: rgba(15,23,42,0.5);
-        border-radius: var(--radius-lg);
+        background: rgba(255,255,255,0.03);
+        border-radius: var(--radius-md);
+        padding: 1rem;
     }
 
     .mic-trigger-btn, .input-with-voice .btn-primary {
         width: 100%;
         justify-content: center;
-        border-radius: var(--radius-lg);
-        font-size: 1rem;
+        border-radius: var(--radius-md);
     }
 
-    /* Dashboard Grids Collapse Smoothly */
+    /* Grids */
     .dashboard-grid, .kanban-grid, .grid-3-cols, .grid-2-cols {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -636,12 +721,12 @@ html {
     
     .col-span-2, .col-span-3 { grid-column: span 1; }
     
-    /* Horizontal Touch Scroll for Today Filter Tabs */
+    /* Segmented Control Pill Filters */
     .tabs-filter-group {
         display: flex;
         overflow-x: auto;
-        gap: 0.65rem;
-        padding-bottom: 0.85rem;
+        gap: 0.5rem;
+        padding-bottom: 1rem;
         -webkit-overflow-scrolling: touch;
         width: 100%;
         scrollbar-width: none;
@@ -656,26 +741,28 @@ html {
         min-height: 44px;
         padding: 0.5rem 1.25rem;
         scroll-snap-align: start;
-        border-radius: 24px; /* Pill shape for filters */
+        border-radius: 30px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
     }
 
-    /* Floating Mic Button Position for Mobile Flow */
+    /* Floating Mic Button Refined for Mobile */
     .floating-mic-container {
-        bottom: 95px; /* Safely above the new 72px bottom nav */
+        bottom: 120px; /* Safely above the floating dock (72px + 2rem bottom) */
         right: 1.25rem;
-        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .floating-mic-btn {
-        width: 62px;
-        height: 62px;
-        font-size: 1.65rem;
-        box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5);
-    }
-    
-    .floating-mic-btn:active {
-        transform: scale(0.9);
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+        background: rgba(255,255,255,0.9);
+        color: #000;
+        box-shadow: 0 10px 30px rgba(255,255,255,0.2);
     }
 }
 
+/* Helpers */
 .hidden { display: none !important; }
+.text-gold { color: var(--text-primary) !important; } /* Override old color classes to white */
+.text-cyan { color: var(--text-secondary) !important; }
