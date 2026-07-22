@@ -495,94 +495,143 @@ html {
     .header {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.75rem;
+        gap: 0.5rem;
     }
     
     .header-title h2 {
-        font-size: 1.35rem;
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+    
+    #header-subtitle {
+        font-size: 0.8rem;
+        line-height: 1.3;
+        opacity: 0.8;
     }
     
     .system-time-container {
         align-items: flex-start;
         width: 100%;
         padding: 0.65rem 0.85rem;
+        background: transparent;
+        border: none;
+        padding-left: 0;
     }
     
-    /* Mobile Bottom Navigation Bar */
+    #live-time {
+        font-size: 1.5rem;
+    }
+    
+    /* Ultra-Clean Mobile Bottom Navigation Bar */
     .sidebar {
         width: 100%;
-        height: 68px;
+        height: 72px;
         top: auto;
         bottom: 0;
         flex-direction: row;
-        padding: 0.4rem 0.25rem;
-        padding-bottom: max(0.4rem, env(safe-area-inset-bottom));
+        padding: 0.5rem 1rem;
+        padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
         border-right: none;
-        border-top: 1px solid var(--border-glass);
-        background: rgba(15, 23, 42, 0.98);
-        backdrop-filter: blur(25px);
+        border-top: 1px solid rgba(255,255,255,0.08);
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(25px) saturate(180%);
         z-index: 100;
-        box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.4);
     }
     
     .brand, .sidebar-footer { display: none; }
     
     .nav-menu {
         flex-direction: row;
-        justify-content: space-around;
+        justify-content: space-between;
         width: 100%;
         gap: 0;
     }
     
     .nav-item {
-        padding: 0.35rem 0.15rem;
+        padding: 0.5rem;
         flex-direction: column;
-        gap: 4px;
-        font-size: 0.65rem;
-        min-height: 48px;
+        gap: 0;
+        min-height: 50px;
         justify-content: center;
         border-left: none !important;
-        border-bottom: 2px solid transparent;
+        border-bottom: none !important;
         flex: 1;
-        border-radius: var(--radius-sm);
+        border-radius: var(--radius-xl);
+        background: transparent !important;
     }
 
-    .nav-item.active {
-        border-bottom-color: var(--accent-gold);
-        background: rgba(255,255,255,0.03);
+    /* Hide text labels on mobile bottom nav for a cleaner iOS-like feel */
+    .nav-item span {
+        display: none;
     }
     
-    /* Maximize Screen Real Estate */
+    .nav-icon {
+        width: 26px;
+        height: 26px;
+        opacity: 0.6;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-item.active .nav-icon {
+        opacity: 1;
+        color: var(--accent-gold);
+        transform: translateY(-2px) scale(1.1);
+        filter: drop-shadow(0 4px 8px rgba(245, 158, 11, 0.4));
+    }
+    
+    /* Hide some less frequently used tabs on mobile bottom nav to increase tap targets */
+    .nav-item[data-tab="revenue"], 
+    .nav-item[data-tab="ideas"] {
+        display: none !important;
+    }
+    
+    /* Maximize Screen Real Estate & Card Ergonomics */
     .main-content {
         margin-left: 0;
-        padding: 1rem 0.65rem;
-        padding-bottom: 95px; /* Clears floating mic & bottom nav smoothly */
+        padding: 1.25rem 0.85rem;
+        padding-bottom: 110px; /* Clears floating mic & bottom nav smoothly */
     }
     
     .glass-panel {
-        padding: 1rem;
+        padding: 1.25rem;
+        border-radius: var(--radius-xl); /* Softer, bubblier corners for mobile */
+        border: 1px solid rgba(255,255,255,0.06);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.25);
     }
     
     /* Quick Command Bar Stacking on Phone */
+    .quick-command-bar {
+        border-radius: var(--radius-xl);
+        padding: 1rem;
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    
     .input-with-voice {
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.65rem;
     }
 
     .input-with-voice input {
         width: 100%;
-        text-align: center;
+        text-align: left;
+        background: rgba(15,23,42,0.5);
+        border-radius: var(--radius-lg);
     }
 
     .mic-trigger-btn, .input-with-voice .btn-primary {
         width: 100%;
         justify-content: center;
+        border-radius: var(--radius-lg);
+        font-size: 1rem;
     }
 
     /* Dashboard Grids Collapse Smoothly */
     .dashboard-grid, .kanban-grid, .grid-3-cols, .grid-2-cols {
         grid-template-columns: 1fr;
-        gap: 0.85rem;
+        gap: 1rem;
     }
     
     .col-span-2, .col-span-3 { grid-column: span 1; }
@@ -591,8 +640,8 @@ html {
     .tabs-filter-group {
         display: flex;
         overflow-x: auto;
-        gap: 0.5rem;
-        padding-bottom: 0.75rem;
+        gap: 0.65rem;
+        padding-bottom: 0.85rem;
         -webkit-overflow-scrolling: touch;
         width: 100%;
         scrollbar-width: none;
@@ -605,25 +654,27 @@ html {
         white-space: nowrap;
         flex-shrink: 0;
         min-height: 44px;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 1.25rem;
         scroll-snap-align: start;
+        border-radius: 24px; /* Pill shape for filters */
     }
 
     /* Floating Mic Button Position for Mobile Flow */
     .floating-mic-container {
-        bottom: 85px;
+        bottom: 95px; /* Safely above the new 72px bottom nav */
         right: 1.25rem;
-        transition: transform 0.2s ease;
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .floating-mic-btn {
-        width: 58px;
-        height: 58px;
-        font-size: 1.5rem;
+        width: 62px;
+        height: 62px;
+        font-size: 1.65rem;
+        box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5);
     }
     
     .floating-mic-btn:active {
-        transform: scale(0.92);
+        transform: scale(0.9);
     }
 }
 
