@@ -853,34 +853,33 @@ body.dark-theme::before {
     
     .col-span-2, .col-span-3 { grid-column: span 1; }
     
-    /* Typography Scaling for Mobile Readability */
-    .glass-panel h3 {
-        font-size: 1.35rem; /* Larger headers in cards */
-        margin-bottom: 1rem;
+    /* ==========================================================================
+       SYSTEMATIC MOBILE TYPOGRAPHY SCALING (Applies across ALL pages)
+       ========================================================================== */
+    html {
+        /* Bumps the base size from 16px to 18px, scaling ALL rem values proportionally */
+        font-size: 18px !important; 
     }
-    
-    .task-item-card {
-        font-size: 1.05rem; /* Larger main task text */
-        padding: 1.25rem;
-    }
-    
-    .task-meta {
-        font-size: 0.85rem; /* Bumped up from 0.75rem */
-        margin-top: 0.65rem;
-    }
-    
-    .stat-pill .stat-lbl {
-        font-size: 0.9rem; /* Bumped up from 0.8rem */
-    }
-    
-    p {
-        font-size: 1.05rem;
+
+    /* Universal minimums for readability across all tabs */
+    body, p, span, li {
         line-height: 1.6;
     }
+
+    /* Ensure even the smallest text elements are comfortably readable on phones */
+    small, .badge, .task-meta, .stat-lbl, .sidebar-footer {
+        font-size: 0.85rem !important; /* 0.85 * 18px = ~15.3px */
+    }
     
-    .badge {
-        font-size: 0.8rem;
-        padding: 0.35rem 0.85rem;
+    /* Ensure form controls are highly visible */
+    input, textarea, select, .form-control {
+        font-size: 1rem !important; /* 18px */
+        padding: 1.25rem !important;
+    }
+
+    /* Card Headers */
+    .glass-panel h3, .task-item-card {
+        font-size: 1.15rem; 
     }
 
     /* Segmented Control Pill Filters */
